@@ -215,8 +215,10 @@ rio_xlsx <- import("~/Desktop/mbb.xlsx")
 ```
 
 To read table data, the programmer needs to specify a separator so the computer knows how to create the table. For example:
+```r
 # error message because it's not specific enough
 r_txt1 <- read.table("~/Desktop/mbb.txt", header = TRUE)
 
 # correct because sep = "\t" is included
 r_txt2 <- read.table("~/Desktop/mbb.txt", header = TRUE, sep = "\t")
+```
