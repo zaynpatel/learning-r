@@ -1,0 +1,38 @@
+# empty global environment
+rm('BostonHousing', 'df', 'test', 'try')
+
+df <- read.csv('/Users/zaynpatel/Downloads/Data/UniversalBank.csv')
+
+# data management
+View(df)
+# remove all non-numeric variables (including factors and logical)
+df$Education <- NULL
+df$ZIP.Code <- NULL
+df$ID <- NULL
+
+# convert target variable to factor
+df$Personal.Loan <- as.factor(df$Personal.Loan)
+levels(df$Personal.Loan) <- c('Does not have a loan', 'Has a loan')
+
+# standardize
+library(caret) 
+source('~/Downloads/Data/BabsonAnalytics.R')
+# preProcess function is apart of caret, load this package first
+processor <- preProcess(df[, 1:11], c('center', 'scale'))
+df <- predict(processor, df)
+
+# build model
+N = nrow(df)
+# build a 60-40 partitian of the data
+trainingSize = round(N * 0.6)
+# set seed to random so vals are same as class
+set.seed(1234)
+# random sample the cases by total rows and training set size
+trainingCases = sample(N, trainingSize)
+# two sets of data (training and test, these have 11 variables we're looking at)
+training = df[trainingCases, ]
+test = df[-trainingCases, ]
+
+library(class)
+#dim(training)
+#class(train) -> to check the type. result = "function"
