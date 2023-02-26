@@ -62,3 +62,24 @@ KNN is a distance based algorithm because it's measuring the distance between ea
 The k-value in KNN is chosen based on cross-validation, choosing different samples of training and test data, and evaluating the test model to see what value of k produces the lowest error %. 
 
 In order to prevent outlier prone outputs, KNN uses common ML methods: normalization and standardization. Normalization works by creating a range where all values fall into the values 0-1. Standardization puts values on the same scale so no one value dominates the computation. Running both of these methods is the best way to choose if normalization or standardization is better for a model. 
+
+### Session 11-12 (Logistic Regression)
+Logistic Regression is a variant of Linear Regression (Session 5-7) that is used for binary classification (yes/no for a given observation). Spam filtering is an example, although Naïve Bayes is traditionally used for that problem. 
+
+We begin by looking at the probability of an event occuring. Specifically, we want to look at it in terms of odds. Mathematically, we get odds by dividing the probability (p) of an event by the probability it doesn't happen (1-p). If we plot the number of something occuring (ex: number of spelling errors) by the odds of something happening (ex: odds of spam), we'll see an exponential curve where as the number of errors increases and approaches a higher number, the probability that the email is spam will shoot up (theoretically to 1 because we're still binary classifying). To reverse the exponential, logistic regression plots the logarithm of the odds. 
+
+The formula for logistic regression is the log of the odds = the y-int + the slope multiplied by s (spelling errors or any other quantity we're measuring). 
+
+Note that when we define the formula and remove the logarithm, the function becomes multiplicative meaning the odds that a message is spam increase by an exponential factor. 
+
+Defined in the lecture was the word monotonic relationship which means a) as the value of one variable increases, the other does too or b) as one variable increases the other decreases. 
+
+To build the logistic regression model, we write `model = glm(ISHIGHVAL ~ ., data=training, family=binomial)` noting that the family is binomial. A binomial probability distribution is one that predicts the models the probability of achieving one outcome (0, 1; yes, no). The equation isfun to look at and I've included a picture with logic of how I obtained it from first principles. 
+
+To evaluate the performance of a logistic regression curve, we use sensitivity (number of observed true values we predict correctly) and specificity (# of observed false's we predict correctly). We compute this by dividing the # of observed trues by all trues, usually by looking at a misclassification table (a.k.a confusion matrix). Sensitivity and specificity values can change based on the probability value we choose. If we increase the probability value to 0.95, for example, the number of observed trues will likely reduce, reducing our sensitivity. Similar to choosing a confidence level, this value is context-based. 
+
+We can also use error rate (the number of times we predicted wrong) as a metric too. These metrics appear in the R global environment and the data scientist should be monitoring these values to ensure they appear within similar range of each other. 
+
+Algorithmically, this looks like `predictionsTF != observations / nrow(test)`. Our error rate is equal to the predictions in the true/false variable that don't equal the observations (test) divided by the total rows in test. 
+
+Visually, we use ROC Charts and Lift Charts to plot the error. In ROC Charts, the goal is to view the area under the curve to see how close our curve is to the ideal variable we're measuring. More area under the curve typically means we're closer to the corner of our ideal value (false positive rate 0, true positive rate 1). In Lift Charts, the initial data table is separated into the probability of something occurring and the observation (was it true or false). The predictions are sorted in descending order. Visually, as the lift chart moves along the x-axis (where the index is), the lift gets smaller, meaning the distance between predictions and ideals reduces. In the example, there is a higher 'cost' to being False at index zero than there is at index 50 because if you're wrong at index 0, the probability is 0.99 and  your observed value is True. 
