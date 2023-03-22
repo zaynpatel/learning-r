@@ -83,3 +83,20 @@ We can also use error rate (the number of times we predicted wrong) as a metric 
 Algorithmically, this looks like `predictionsTF != observations / nrow(test)`. Our error rate is equal to the predictions in the true/false variable that don't equal the observations (test) divided by the total rows in test. 
 
 Visually, we use ROC Charts and Lift Charts to plot the error. In ROC Charts, the goal is to view the area under the curve to see how close our curve is to the ideal variable we're measuring. More area under the curve typically means we're closer to the corner of our ideal value (false positive rate 0, true positive rate 1). In Lift Charts, the initial data table is separated into the probability of something occurring and the observation (was it true or false). The predictions are sorted in descending order. Visually, as the lift chart moves along the x-axis (where the index is), the lift gets smaller, meaning the distance between predictions and ideals reduces. In the example, there is a higher 'cost' to being False at index zero than there is at index 50 because if you're wrong at index 0, the probability is 0.99 and  your observed value is True. 
+
+### Session 15-16 (Classification and Regression Trees)
+Decision trees can work with any number of variables. They're composed of nodes (data of the tree. In R, this represents the current prediction, percent target value, percent of the total dataset) and edges (relationships between nodes). 
+
+Random forests are *ensembles* of trees and train multiple decision trees on different subsets of data to get a final, accurate result. These structures help mitigate overfitting by aggregating the predictions of multiple trees. 
+
+Gini impurity is mathematically calculated via `p(1-p)` and conceptually means how often a randomly chosen data point from one node is incorrectly classified if it were randomly labelled according to class variables. 
+
+The decision to stop splitting based based on the minimum size the data can be split into before overfitting. If the data is split into too many branches (in R this method is `minbucket`), it's not general enough to fit new data. The minimum number of samples (in R this method is `minsplit`) needed is another criterion because if there aren't enough samples the model will be underfit. 
+
+Pruning, removing branches from a tree, happens after the model is built whereby branches that don't meaningfully contribute are omitted. 
+
+K-fold cross-validation is a technique for evaluating the performance of a model by dividing the data into K subsets and training the model on K-1 subsets while testing it on the remaining subset. This process is repeated K times, with each subset serving as the test set once. The results are averaged to obtain an estimate of the model's performance. It is not used to decide how to split the tree or when to stop splitting. The model is chosen based on which subset produced the minimum amount of error. 
+
+Just as in neural networks where backpropogation is used to reduce the loss function, ML models have methods to do this too. As I mentioned in line 92, the gini impurity is a method to minimize the error rate of the model by deciding what's a good split versus not a good split. 
+
+Trees are a computationally expensive model because they have an exponential runtime. As the tree grows, the nodes and branches increase exponentially. 
