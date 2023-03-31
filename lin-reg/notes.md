@@ -100,3 +100,20 @@ K-fold cross-validation is a technique for evaluating the performance of a model
 Just as in neural networks where backpropogation is used to reduce the loss function, ML models have methods to do this too. As I mentioned in line 92, the gini impurity is a method to minimize the error rate of the model by deciding what's a good split versus not a good split. 
 
 Trees are a computationally expensive model because they have an exponential runtime. As the tree grows, the nodes and branches increase exponentially. 
+
+### Session 17-18 (Naïve Bayes)
+
+*Common NLP techniques*
+
+* Bag-of-words (BoW): BoW is a simple technique for representing text as a vector of word frequencies. The idea is to treat each document as a "bag" of its constituent words, without considering the order in which they appear. This approach is commonly used for tasks such as sentiment analysis and document classification.
+
+* TF-IDF: TF-IDF (term frequency-inverse document frequency) is a technique for weighting the importance of words in a document. It takes into account the frequency of each word in the document (TF) and the frequency of the word across all documents in the corpus (IDF). Words that are common in a particular document but rare in the corpus are given higher weight.
+
+* Word embeddings: Word embeddings are dense vector representations of words that capture semantic relationships between them. They are typically learned using neural networks, and can be used for tasks such as text classification and information retrieval.
+
+* Named entity recognition (NER): NER is the task of identifying and classifying named entities in text, such as people, organizations, and locations. This can be done using rule-based approaches, statistical models, or a combination of both.
+
+* Part-of-speech (POS) tagging: POS tagging is the task of assigning each word in a sentence a grammatical category, such as noun, verb, or adjective. This can be done using rule-based approaches, statistical models, or a combination of both.
+
+
+Dependency parsing: Dependency parsing is the task of identifying the syntactic relationships between words in a sentence. This can be used for tasks such as information extraction and text summarization.
